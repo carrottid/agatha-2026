@@ -319,7 +319,7 @@
   function renderPosterA(stats) {
     const actorHtml = (r, a, i) => {
       const st = stats.perActor[r.key + ':' + a];
-      return `<div class="p-actor">${photo(`images/cast/${r.key}-${i + 1}.jpg`, a)}<div class="p-name">${esc(a)}</div>${countHtml(st.seen, st.total)}</div>`;
+      return `<div class="p-actor">${photo(`images/cast/${r.key}-${i + 1}.jpg?v=2`, a)}<div class="p-name">${esc(a)}</div>${countHtml(st.seen, st.total)}</div>`;
     };
     const title = r => `<div class="p-group-title"><span class="ttl">${esc(r.name)}</span></div>`;
     const group = r => `<div class="p-group">${title(r)}<div class="p-row">${r.actors.map((a, i) => actorHtml(r, a, i)).join('')}</div></div>`;

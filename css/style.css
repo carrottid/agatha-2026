@@ -196,8 +196,7 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 600; letter-spacing: .04
 
 /* ───────── 정산판 공통 ───────── */
 .poster-section { padding: 30px 12px 56px; }
-.poster-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; max-width: 1600px; margin: 0 auto 12px; }
-.poster-toolbar h2 { line-height: 1.3; font-size: 20px; color: var(--gold); }
+.poster-toolbar { display: flex; align-items: center; justify-content: flex-end; gap: 12px; max-width: 1600px; margin: 0 auto 12px; }
 .poster-toolbar button { flex: none; }
 .poster-toolbar button.dl { background: var(--accent); border-color: #c5555a; color: #fff; }
 .poster-toolbar button.dl:disabled { opacity: .5; cursor: progress; }
@@ -215,7 +214,7 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 600; letter-spacing: .04
 
 /* 사진 슬롯 */
 .p-photo {
-  position: relative; width: 100%; aspect-ratio: 640 / 870; overflow: hidden;
+  position: relative; width: 100%; aspect-ratio: 2 / 3; overflow: hidden;
   border: 1px solid var(--frame); background: #1a0a08;
 }
 .p-photo img { width: 100%; height: 100%; object-fit: cover; }
