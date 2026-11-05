@@ -5,6 +5,7 @@
   'use strict';
 
   const STORAGE_KEY = 'agatha2026-settlement-v1';
+  const FILTER_KEY = 'agatha2026-filter-v1';   // 배우 필터 선택 (좌석 기록과 따로 저장)
   const SHOWS = SCHEDULE.filter(r => !r.off);
   const ROLE_IDX = Object.fromEntries(ROLES.map((r, i) => [r.key, i]));
   const $ = (sel, el = document) => el.querySelector(sel);
@@ -31,6 +32,22 @@
         }
       }
     } catch (e) { /* 저장소 사용 불가 — 메모리로만 동작 */ }
+  }
+  /* 배우 필터 선택: 다음 방문에도 유지. 캐스팅 변경으로 사라진 배우는 버린다 */
+  function loadFilter() {
+    try {
+      const arr = JSON.parse(localStorage.getItem(FILTER_KEY) || '[]');
+      if (!Array.isArray(arr)) return;
+      const valid = new Set();
+      ROLES.forEach(r => r.actors.forEach(a => valid.add(r.key + ':' + a)));
+      arr.forEach(k => { if (typeof k === 'string' && valid.has(k)) selected.add(k); });
+    } catch (e) { /* 저장소 사용 불가 또는 손상된 값 — 전체 보기로 시작 */ }
+  }
+  function saveFilter() {
+    try {
+      if (selected.size) localStorage.setItem(FILTER_KEY, JSON.stringify(Array.from(selected)));
+      else localStorage.removeItem(FILTER_KEY);
+    } catch (e) { /* 저장소 사용 불가 — 이번 방문에만 적용 */ }
   }
   let saveTimer = null;
   function save() {
@@ -497,6 +514,7 @@
       const k = btn.dataset.k;
       if (k === '__all') selected.clear();
       else if (selected.has(k)) selected.delete(k); else selected.add(k);
+      saveFilter();
       renderFilter(); renderSchedule(); renderSummary(computeStats());
     });
 
@@ -553,6 +571,7 @@
 
   /* ---------------- 시작 ---------------- */
   load();
+  loadFilter();
   renderFilter();
   renderSchedule();
   renderPosters();
